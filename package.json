@@ -1,0 +1,8 @@
+{
+  "name": "gd-license-server",
+  "version": "1.0.0",
+  "description": "GD AUTO COUNT license key server",
+  "dependencies": {
+    "nodemailer": "^6.9.0"
+  }
+}
