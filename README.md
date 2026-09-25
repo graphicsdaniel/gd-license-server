@@ -24,3 +24,8 @@
 ## How it works
 
 Customer buys → Gumroad POSTs to /api/ping → key generated from order ID → email sent via Gmail
+
+---
+
+The `clipboard-manager/` folder holds **GD Clipboard**, a separate desktop app
+(not deployed to Vercel). See [clipboard-manager/README.md](clipboard-manager/README.md).

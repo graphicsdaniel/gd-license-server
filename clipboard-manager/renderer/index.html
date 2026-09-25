@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'">
+  <title>GD Clipboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="title-row">
+      <span class="app-name">Clipboard</span>
+      <span class="count" id="count"></span>
+      <button class="icon-btn" id="clear" title="Clear history (keeps pinned)">Clear</button>
+      <button class="icon-btn" id="close" title="Close (Esc)">&times;</button>
+    </div>
+    <input id="search" type="search" placeholder="Type to search…" autocomplete="off" spellcheck="false">
+    <nav class="tabs" id="tabs" role="tablist"></nav>
+  </header>
+  <main id="list" class="list" role="listbox"></main>
+  <footer class="hint" id="hint"></footer>
+  <script src="app.js"></script>
+</body>
+</html>
