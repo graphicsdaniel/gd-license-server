@@ -68,6 +68,21 @@ function deleteStored(clips) {
   }
 }
 
+// ---- Notices ------------------------------------------------------------------
+
+function notify(body) {
+  if (Notification.isSupported()) {
+    new Notification({ title: 'GD Clipboard', body }).show();
+  } else if (tray && platform.isWin) {
+    tray.displayBalloon({ title: 'GD Clipboard', content: body });
+  }
+}
+
+function formatSize(bytes) {
+  if (bytes < 1024 * 1024) return `${Math.max(1, Math.round(bytes / 1024))} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1).replace(/\.0$/, '')} MB`;
+}
+
 // ---- Clipboard watching -----------------------------------------------------
 
 // Hashes a spread-out sample of the bitmap so polling large images stays cheap.
@@ -97,7 +112,11 @@ function snapshot() {
 
 async function captureClip(snap) {
   if (snap.kind === 'text') {
-    if (Buffer.byteLength(snap.text) > MAX_TEXT_BYTES) return null;
+    const bytes = Buffer.byteLength(snap.text);
+    if (bytes > MAX_TEXT_BYTES) {
+      notify(`Not saved to history: the copied text is ${formatSize(bytes)} (limit ${formatSize(MAX_TEXT_BYTES)}). It is still on your clipboard, so you can paste it normally.`);
+      return null;
+    }
     return { key: snap.signature, type: classifyText(snap.text), text: snap.text };
   }
 
@@ -193,7 +212,7 @@ function warnPasteUnavailable() {
     : platform.isWin
       ? 'Could not paste automatically. The item is on your clipboard - press Ctrl+V.'
       : 'Install "xdotool" to paste automatically. The item is on your clipboard - press Ctrl+V.';
-  if (Notification.isSupported()) new Notification({ title: 'GD Clipboard', body }).show();
+  notify(body);
 }
 
 // ---- Window -----------------------------------------------------------------
@@ -274,9 +293,7 @@ function pushState() {
 function registerShortcut(accel) {
   globalShortcut.unregisterAll();
   if (globalShortcut.register(accel, toggleWindow)) return true;
-  if (Notification.isSupported()) {
-    new Notification({ title: 'GD Clipboard', body: `The shortcut ${accel} is used by another app. Pick another one from the tray menu.` }).show();
-  }
+  notify(`The shortcut ${accel} is used by another app. Pick another one from the tray menu.`);
   return false;
 }
 

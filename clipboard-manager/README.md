@@ -28,6 +28,13 @@ Right-click the tray icon to change how many items to keep (10–15), change the
 shortcut, turn auto-paste off, pause saving, start with your computer, or clear
 the history. History is kept between restarts (pinned items survive "Clear").
 
+### Size limits
+
+- **Files:** no limit — only the file's location is saved, not a copy.
+- **Text:** up to 2 MB per copy. Bigger copies aren't saved to history; a
+  notice tells you, and the text is still on your clipboard to paste normally.
+- **Images:** no limit. They're stored as PNGs and deleted when they drop out of history.
+
 ### Auto-paste permissions
 
 - **macOS:** allow GD Clipboard in *System Settings → Privacy & Security → Accessibility*.
